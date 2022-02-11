@@ -2,6 +2,7 @@
 const inquirer = require('inquirer');
 // writeFileSync - create new file 
 const fs = require('fs');
+const writeFile = require('./tools/generateMarkdown');
 
 // Array of questions for user input
 const promtUser = () => {
@@ -70,62 +71,12 @@ const promtUser = () => {
     ])
 };
 
-// Function to write README file - structure of the html
-const writeToFile = ({ title, name,license, motivation, step1, step2, step3, step4, webpageLink, resourceLink, email, year}) => 
-`# ${title}
-## ${name} 
----
-### License
-
----
-
-
-## Contents:
-- [Motivation](#motivation)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributor](#contribution)
-
----
-
-## Motivation 
-// ### Motivation behind the project?
-${motivation}
-
----
-
-## Installation:
-- ${step1}
-- ${step2}
-- ${step3}
-- ${step4}
-
----
-
-Webpage link and resource are provided to further check and test.
-
-* Webpage Link
-https://${webpageLink}
-
-* Resource Link
-https://${resourceLink}
-
----
-
-
-## Contributor(s)
-
-- ${name} - ${email}
-
----
-
-## © ${name}, ${year}`;
 
 // Initialize app function to generate readme file
-const init = () => {
+function init() {
     promtUser()
       // Use writeFileSync method to use promises instead of a callback function
-      .then((answers) => fs.writeFileSync('README.md', writeToFile(answers)))
+      .then((answers) => fs.writeFileSync(`${answers.name}_README.md`, writeFile(answers)))
       .then(() => console.log('Successfully wrote Readme File'))
       .catch((err) => console.error(err));
   };
